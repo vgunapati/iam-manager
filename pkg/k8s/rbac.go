@@ -4,8 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
 	"github.com/keikoproj/iam-manager/pkg/log"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	corev1 "k8s.io/api/core/v1"
 	apierr "k8s.io/apimachinery/pkg/api/errors"
@@ -20,7 +21,8 @@ func (c *Client) CreateOrUpdateServiceAccount(ctx context.Context, saName string
 			Name:      saName,
 			Namespace: ns,
 			Annotations: map[string]string{
-				"eks.amazonaws.com/role-arn": roleARN,
+				"eks.amazonaws.com/role-arn":               roleARN,
+				"eks.amazonaws.com/sts-regional-endpoints": "true",
 			},
 		},
 	}
